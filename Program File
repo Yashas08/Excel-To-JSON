@@ -1,0 +1,44 @@
+  import java.io.File;
+  import java.io.FileInputStream;
+  import java.io.FileNotFoundException;
+  import java.io.IOException;
+  import java.util.Iterator;
+  import org.apache.poi.ss.usermodel.Cell;
+  import org.apache.poi.ss.usermodel.Row;
+  import org.apache.poi.xssf.usermodel.XSSFSheet;
+  import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+  import org.json.simple.JSONObject; 
+
+  public class ConvertExcel2Json {public static void main(String[] args) {
+     try
+     { 
+       File excel = new File("C:Book.xlsx"); 
+         JSONObject jo = new JSONObject();
+       FileInputStream fis = new FileInputStream(excel); 
+       XSSFWorkbook book = new XSSFWorkbook(fis); 
+       XSSFSheet sheet = book.getSheetAt(0); 
+       Iterator<Row> itr = sheet.iterator(); 
+           while(itr.hasNext())
+       {
+             Row row = itr.next(); 
+               Cell cell=row.getCell(0);
+         String s2=cell.getStringCellValue();
+         Cell cell1=row.getCell(1);
+         String s3=cell1.getStringCellValue();
+         jo.put("Answer", s3);
+         jo.put("Question",s2);
+         System.out.print(jo);
+
+      }
+    book.close(); 
+    fis.close();
+    } 
+
+    catch (FileNotFoundException fe) 
+    { fe.printStackTrace(); } 
+    catch (IOException ie)
+    { ie.printStackTrace(); } 
+
+  }
+
+  }
